@@ -13,7 +13,6 @@ const commentsSchema = new Schema({
   },
 
   commentId: {
-
     type: String,
     unique: true,
   },
