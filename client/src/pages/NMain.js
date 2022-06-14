@@ -1,10 +1,24 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components'
-
+import axios from 'axios';
 
 function NMain({ 가게이름 }) {
-    const navigate = useNavigate(); 
+  const navigate = useNavigate();
+
+  const [post , setPost] = React.useState([]) 
+
+//   const loadPostAxios= ()=> {
+//     axios.get('url'
+//     ).then(function(response)  {
+              
+//         setPost([...response.data.]);
+//     });
+    
+// }
+
+          
+         
     
  
     return (
@@ -17,12 +31,13 @@ function NMain({ 가게이름 }) {
     
     <div>
       {
-        가게이름.map((a, i) => {
+        post.map((a, i) => {
           return (
             <div style={{ background: 'gray', height: '300px', width: '300px', color: 'white' }}>
-              <p>{a.name}</p>
-              <p>{a.location}</p>
-              <p>{a.image}</p>
+              <img src={setPost[index].foodImg} />
+              <p>{setPost[index].stdRestNm}</p>
+              <p>{setPost[index].foodNm}</p>
+              <p>{setPost[index].foodCost}</p>
               <tr></tr>
             </div>
           )

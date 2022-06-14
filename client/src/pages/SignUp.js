@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components'
 import axios from 'axios'
-import { storage } from './shared/firebase';
+import { storage } from '../shared/firebase';
 import {ref,uploadBytes, getDownloadURL} from 'firebase/storage'
 
 
@@ -14,20 +14,35 @@ function SignUp() {
     const pw_ref = React.useRef(null);
     const pw_check_ref = React.useRef(null);
 
-    const [myprof,serMypro]=React.useState("");
+    
     const [username, setUserName] = React.useState("");
     const [password, setPwd] = React.useState("");
     const [pwdCheck, setPwdCheck] = React.useState("");
 
+    const UpImageUrl= async (e) => {
+   
+
+        const upload_file = await uploadBytes(
+          ref(storage, `images/${e.target.files[0].name}`),
+          e.target.files[0]
+        );
+      
+      
+        const file_url = await getDownloadURL(upload_file.ref)
+        profile_ref.current = {url: file_url};
+        };
+
 
     const signupdata = () => {
      
-        axios.post("/api/user/signup",{
-            "img_url":profile_ref.current.value,
+        axios.post("http://localhost:5001/list",{
+            "img_url":profile_ref.current?.url,
             "userId" : id_ref.current.value,
             "password": pw_ref.current.value,
             "password_confirm": pw_check_ref.current.value
         }).then(function(response){
+          
+
             alert("회원가입을 축하드립니다!!")
             navigate('/');
 
@@ -47,7 +62,7 @@ function SignUp() {
                        <input
                             type="file"
                             label="파일선택"
-                             onChange={(e) => serMypro(e.target.value)}
+                             onChange={UpImageUrl}
                             
                             ref={profile_ref} /><br />
                         <input

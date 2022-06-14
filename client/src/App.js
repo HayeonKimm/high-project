@@ -5,7 +5,7 @@ import SignUp from './pages/SignUp';
 import Main from './pages/Main';
 import LogIn from './pages/LogIn';
 import Detail from './pages/Detail';
-import NMain  from'./pages/NMain'
+// import NMain  from'./pages/NMain'
 import styled from 'styled-components'
 
 
@@ -55,11 +55,13 @@ function App() {
     <div className="App">
       <Title onClick={()=> {navigate('/') }}>🛣고속도로  로 '맛' 으 </Title>
       <Routes>
-      {token ? (
-          <Route path="/" element={<Main 가게이름={가게이름}/>} />      
+      <Route path="/Main" element={<Main 가게이름={가게이름}/>} /> 
+      {/* <Route path="/" element={<NMain 가게이름={가게이름}/>} />  */}
+      {/* {token ? (
+              
         ) : (
-          <Route path="/" element={<NMain 가게이름={가게이름}/>} />      
-        )}
+               
+        )} */}
               
         <Route path="/SignUp" element={<SignUp />} />   
         <Route path="/LogIn" element={<LogIn />} />
