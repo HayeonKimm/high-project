@@ -1,15 +1,15 @@
-const jwt = require("jsonwebtoken");
-const User = require("../schemas/user");
-require("dotenv").config();
+const jwt = require('jsonwebtoken');
+const User = require('../schemas/user');
+require('dotenv').config();
 
 module.exports = (req, res, next) => {
   const { authorization } = req.headers;
-  const [tokenType, tokenValue] = authorization.split(" ");
+  const [tokenType, tokenValue] = authorization.split(' ');
   // console.log(tokenType, tokenValue);
 
-  if (tokenType !== "Bearer") {
+  if (tokenType !== 'Bearer') {
     return res.status(401).send({
-      errorMessage: "로그인 후 사용하세요.",
+      errorMessage: '로그인 후 사용하세요.',
     });
   }
 
@@ -21,7 +21,7 @@ module.exports = (req, res, next) => {
     });
   } catch (error) {
     return res.status(401).send({
-      errorMessage: "로그인 후 사용하세요.",
+      errorMessage: '로그인 후 사용하세요.',
     });
   }
 };
