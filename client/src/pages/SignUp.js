@@ -2,7 +2,8 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components'
 import axios from 'axios'
-
+import { storage } from './shared/firebase';
+import {ref,uploadBytes, getDownloadURL} from 'firebase/storage'
 
 
 function SignUp() {
@@ -20,7 +21,7 @@ function SignUp() {
 
 
     const signupdata = () => {
-     {
+     
         axios.post("/api/user/signup",{
             "img_url":profile_ref.current.value,
             "userId" : id_ref.current.value,
@@ -31,7 +32,7 @@ function SignUp() {
             navigate('/');
 
         })
-        }
+        
     }
         
 
