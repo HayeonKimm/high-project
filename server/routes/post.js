@@ -10,12 +10,11 @@ dotenv.config();
 
 var Uni_num = 0;
 
-router.post('/post/board', authMiddleware ,async (req, res) => {
+router.post('/post/board', authMiddleware, async (req, res) => {
   const { stdRestNm, svarAddr, routeNm, foodNm, foodImg, foodCost } = req.body;
-  
-  const { user }  = res.locals;
-  console.log(user);
 
+  const { user } = res.locals;
+  
   const createdLists = await Posts.create({
     stdRestNm,
     svarAddr,

@@ -4,7 +4,9 @@ const router = express.Router();
 const Joi = require('joi');
 const jwt = require('jsonwebtoken');
 const jwtSecret = process.env.SECRET_KEY;
+const dotenv = require('dotenv');
 const authMiddleware = require('../middlewares/auth-middleware');
+dotenv.config();
 
 //회원가입 양식
 const postUsersSchema = Joi.object({
@@ -36,41 +38,28 @@ router.post('/signup', async (req, res) => {
 
     const user = new User({ userId, password, userImageUrl });
     await user.save();
-    res.status(201).send({ messege: '회원가입 완성' });
+    res.status(201).send({ message: '회원가입 완성' });
   } catch (error) {
-    return res.status(400).send({
-      errorMessage: '요청한 데이터 형식이 올바르지 않습니다.',
-    });
+    return res.status(400).send(
+      console.error(error)
+      // errorMessage: '요청한 데이터 형식이 올바르지 않습니다.',
+    );
   }
 });
 
 //로그인
 router.post('/user/login', async (req, res) => {
-  User.findOne({ userId: req.body.userId }, (err, user) => {
+    const { userId, password } = req.body;
+    const user = await User.findOne({ userId, password });
+
     if (!user) {
-      return res.json({
-        loginSuccess: false,
-        message: '찾고자 하는 아이디가 없습니다.',
+      return res.status(400).send({
+        errorMessage: '아이디 또는 비밀번호를 확인해주세요.',
       });
     }
+    const token = jwt.sign({ userId: user.userId }, process.env.SECRET_KEY);
+    res.send({ token });
 
-    user.comparePassword(req.body.password, (err, isMatch) => {
-      if (!isMatch)
-        return res.json({
-          loginSuccess: false,
-          message: '비밀번호가 틀렸습니다.',
-        });
-
-      user.generateToken((err, user) => {
-        if (err) return res.status(400).send(err);
-
-        res
-          .send(user.token)
-          .status(200)
-          .json({ loginSuccess: true, userId: user._id });
-      });
-    });
-  });
 });
 
 // 정보 조회
