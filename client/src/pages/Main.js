@@ -1,42 +1,57 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components'
-
+import Header2  from '../headers/header2';
+import axios from 'axios';
 
 function Main({ 가게이름 }) {
     const navigate = useNavigate(); 
    
-    const logOut= () => {
-      localStorage.removeItem('login-token');
-      
-      navigate('/')
-    }
+    // const [Img , setImg] = React.useState();
+
+  const [post , setPost] = React.useState([]);
+
+  React.useEffect(() => {
+    loadPostAxios();
+    // loadUserAxios();
+   }, []);   
+   
+
+  const loadPostAxios = ()=> {
+    axios.get('http://localhost:5001/list'
+    ).then(function(response)  {
+              console.log(...response.data)
+        setPost([...response.data]);
+    });    
+}
+
 
     
     
         
     return (
         <div>
-           {/* <image shape= "circle" src={user.userImageUrl}></image>
+            {/* <image shape= "circle" src={.foodImg}></image>
            <nav>{user.userId}</nav>  */}
-         
-          <button onClick={logOut}> log out</button>
+         <Header2/>
+          
           
     <div>
     
     
     <div>
-      {
-        가게이름.map((a, i) => {
+    {
+        post.map((a, i) => {
           return (
-            <div style={{ background: 'gray', height: '300px', width: '300px', color: 'white' }}>
-              <p>{a.name}</p>
-              <p>{a.location}</p>
-              <button onClick={() => {
-                navigate(`/Detail/${i}/`)
-              }}>{a.image}</button>
+            <Form >
+              <Img src={a.foodImg} />
+              <p>{a.stdRestNm}</p>
+              <Title>{a.title}</Title>
+              <Content>{a.foodCost}</Content>
               <tr></tr>
-            </div>
+
+                    <button>삭제하기</button>
+            </Form>
           )
         })
       }
@@ -54,6 +69,30 @@ function Main({ 가게이름 }) {
     );
 }
 
+const Form = styled.div`
+display: flex;
+flex-direction: column;
+justify-content: center;
+position: relative;
+left: 27px;
+`;
+
+const Title = styled.h2`
+   position: relative;
+   right: 20px;
+`;
+const Img = styled.img`
+   max-width: 550px;
+   position: relative;
+   right: 27px;
+   justify-content: center;
+   align-items: center;
+`;
+const Content = styled.p`
+   margin: 5px auto;
+   position: relative;
+   right: 25px;
+`;
 
 
 

@@ -7,9 +7,7 @@ function Header1() {
 
     const navigate = useNavigate();
 
-    const loadUserAxios = {
-        axios.get('로그인')
-    }
+  
 
     return (
         <>

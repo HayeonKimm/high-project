@@ -6,6 +6,7 @@ import Main from './pages/Main';
 import LogIn from './pages/LogIn';
 import Detail from './pages/Detail';
 import NMain  from'./pages/NMain'
+
 import styled from 'styled-components'
 
 
