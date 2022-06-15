@@ -10,21 +10,36 @@ dotenv.config();
 
 var Uni_num = 0;
 
+
+
 router.post('/post/board', authMiddleware, async (req, res) => {
   const { stdRestNm, svarAddr, routeNm, foodNm, foodImg, foodCost } = req.body;
 
   const { user } = res.locals;
-  
-  const createdLists = await Posts.create({
-    stdRestNm,
-    svarAddr,
-    routeNm,
-    foodNm,
-    foodImg,
-    foodCost,
-  });
+  const abc = user[0].userId;
+  // console.log(abc)
+  if (abc=="admin"){
 
-  res.json({ Posts: createdLists });
+
+    const createdLists = await Posts.create({
+      stdRestNm,
+      svarAddr,
+      routeNm,
+      foodNm,
+      foodImg,
+      foodCost,
+    });
+
+    res.json({ Posts: createdLists });
+
+  }else{
+    return res
+    .status(400)
+    .json({ success: false, errorMessage: '해당 권한이 없습니다.' });
+
+  }
+  
+
 });
 
 // 전체 게시물 조회 API
@@ -43,6 +58,9 @@ router.put('/post/board/:foodNm', async (req, res) => {
   const { stdRestNm, svarAddr, routeNm, foodNm, foodImg, foodCost } = req.body;
   // 없을 때
 
+  const { user } = res.locals;
+  const abc = user[0].userId;
+
   const [existsLists] = await Posts.find({ foodNm });
 
   // console.log(existsLists.length); // 셀수가 없다.
@@ -53,27 +71,51 @@ router.put('/post/board/:foodNm', async (req, res) => {
       .json({ success: false, errorMessage: '해당 게시물이 없습니다.' });
   }
 
-  await Posts.updateOne({ foodNm }, { $set: { stdRestNm } });
+  if (abc=="admin"){
 
-  res.json({ success: true });
+    await Posts.updateOne({ foodNm }, { $set: { stdRestNm } });
+
+    res.json({ success: true });
+  
+  }else{
+    return res
+    .status(400)
+    .json({ success: false, errorMessage: '해당 권한이 없습니다.' });
+
+  }
 });
 
 // 게시글 삭제 API : foodNm로 조회
 // API를 호출할 때 입력된 비밀번호를 비교하여 동일할 때만 글이 삭제되게 하기
 
-// router.delete('post/board/:foodNm', async (req, res) => {
-//   const { stdRestNm, svarAddr, routeNm, foodNm, foodImg, foodCost } = req.body;
+router.delete('post/board/:foodNm', async (req, res) => {
+  const { stdRestNm, svarAddr, routeNm, foodNm, foodImg, foodCost } = req.body;
 
-//   const existsLists = await Posts.find({ foodNm });
-//   if (existsLists.length) {
-//     await Posts.deleteOne({ foodNm });
-//   } else {
-//     return res
-//       .status(400)
-//       .json({ success: false, errorMessage: '권한이 없습니다.' });
-//   }
+  const existsLists = await Posts.find({ foodNm });
 
-//   res.json({ success: true });
-// });
+  const { user } = res.locals;
+  const abc = user[0].userId;
+
+
+  if (abc=="admin"){
+
+    if (existsLists.length) {
+      await Posts.deleteOne({ foodNm });
+    } else {
+      return res
+        .status(400)
+        .json({ success: false, errorMessage: '권한이 없습니다.' });
+    }
+
+    res.json({ success: true });
+
+
+  }else{
+    return res
+    .status(400)
+    .json({ success: false, errorMessage: '해당 권한이 없습니다.' });
+
+  }
+});
 
 module.exports = router;
