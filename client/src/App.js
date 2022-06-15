@@ -5,6 +5,7 @@ import SignUp from './pages/SignUp';
 import Main from './pages/Main';
 import LogIn from './pages/LogIn';
 import Detail from './pages/Detail';
+// import NMain  from'./pages/NMain'
 import styled from 'styled-components'
 
 
@@ -37,13 +38,31 @@ function App() {
     },
   ])
 
+
+  const token = localStorage.getItem("token")
+  
+  // const isLoginCheck = () => {
+  //   if(!localStorage.getItem('idx')) {
+  //     setIsLogin (true);
+  //   } else {
+  //     setIsLogin (false);
+  //   }
+  // };
+ 
  
   const navigate = useNavigate();
   return (
     <div className="App">
       <Title onClick={()=> {navigate('/') }}>🛣고속도로  로 '맛' 으 </Title>
       <Routes>
-        <Route path="/" element={<Main 가게이름={가게이름}/>} />             
+      <Route path="/Main" element={<Main 가게이름={가게이름}/>} /> 
+      {/* <Route path="/" element={<NMain 가게이름={가게이름}/>} />  */}
+      {/* {token ? (
+              
+        ) : (
+               
+        )} */}
+              
         <Route path="/SignUp" element={<SignUp />} />   
         <Route path="/LogIn" element={<LogIn />} />
         <Route path='/Detail/:id' element={<Detail 가게이름={가게이름}/>}/>

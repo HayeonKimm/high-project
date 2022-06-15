@@ -5,11 +5,22 @@ import styled from 'styled-components'
 
 function Main({ 가게이름 }) {
     const navigate = useNavigate(); 
+   
+    const logOut= () => {
+      localStorage.removeItem('login-token');
+      
+      navigate('/')
+    }
+
     
- 
+    
+        
     return (
         <div>
-          <button onClick={()=>{navigate('/LogIn')}} > Log in  </button>
+           {/* <image shape= "circle" src={user.userImageUrl}></image>
+           <nav>{user.userId}</nav>  */}
+         
+          <button onClick={logOut}> log out</button>
           <Line/>
     <div>
     
