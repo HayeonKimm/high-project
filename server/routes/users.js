@@ -46,7 +46,7 @@ router.post('/signup', async (req, res) => {
 
 //로그인
 router.post('/user/login', async (req, res) => {
-  User.findOne({ userid: req.body.userid }, (err, user) => {
+  User.findOne({ userId: req.body.userId }, (err, user) => {
     if (!user) {
       return res.json({
         loginSuccess: false,
@@ -67,7 +67,7 @@ router.post('/user/login', async (req, res) => {
         res
           .send(user.token)
           .status(200)
-          .json({ loginSuccess: true, userid: user._id });
+          .json({ loginSuccess: true, userId: user._id });
       });
     });
   });
