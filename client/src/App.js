@@ -5,7 +5,7 @@ import SignUp from './pages/SignUp';
 import Main from './pages/Main';
 import LogIn from './pages/LogIn';
 import Detail from './pages/Detail';
-// import NMain  from'./pages/NMain'
+import NMain  from'./pages/NMain'
 import styled from 'styled-components'
 
 
@@ -50,13 +50,13 @@ function App() {
   // };
  
  
-  const navigate = useNavigate();
+ 
   return (
     <div className="App">
-      <Title onClick={()=> {navigate('/') }}>🛣고속도로  로 '맛' 으 </Title>
+      
       <Routes>
-      <Route path="/Main" element={<Main 가게이름={가게이름}/>} /> 
-      {/* <Route path="/" element={<NMain 가게이름={가게이름}/>} />  */}
+      <Route path="/" element={<Main 가게이름={가게이름}/>} /> 
+      <Route path="/Nmain" element={<NMain 가게이름={가게이름}/>} /> 
       {/* {token ? (
               
         ) : (
@@ -71,9 +71,5 @@ function App() {
   );
 }
 
-const Title = styled.h1`
-font-family: 'Yeongdo-Rg';
-
-`
 
 export default App;

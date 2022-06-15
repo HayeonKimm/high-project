@@ -21,7 +21,7 @@ function Main({ 가게이름 }) {
            <nav>{user.userId}</nav>  */}
          
           <button onClick={logOut}> log out</button>
-          <Line/>
+          
     <div>
     
     
@@ -54,8 +54,7 @@ function Main({ 가게이름 }) {
     );
 }
 
-const Line = styled.hr`
-`
+
 
 
 export default Main
