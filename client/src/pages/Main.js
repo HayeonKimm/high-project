@@ -7,7 +7,7 @@ import axios from 'axios';
 function Main() {
   const navigate = useNavigate();
   
-  let {postId} =useParams();
+  // let {postId} =useParams();
 
   const [post, setPost] = React.useState([]);
 
