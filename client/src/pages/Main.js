@@ -1,97 +1,121 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components'
-import Header2  from '../headers/header2';
+import Header2 from '../headers/header2';
 import axios from 'axios';
 
-function Main({ 가게이름 }) {
-    const navigate = useNavigate(); 
-   
-    // const [Img , setImg] = React.useState();
+function Main() {
+  const navigate = useNavigate();
+  
+  let {postId} =useParams();
 
-  const [post , setPost] = React.useState([]);
+  const [post, setPost] = React.useState([]);
 
   React.useEffect(() => {
     loadPostAxios();
     // loadUserAxios();
-   }, []);   
-   
+  }, []);
 
-  const loadPostAxios = ()=> {
+  // const loadUserAxios = () => {
+  //   axios.get("http://54.180.120.192/api/main"
+  //   ).then(function (response) {
+
+  //   });
+  // }
+  const loadPostAxios = () => {
     axios.get('http://localhost:5001/list'
-    ).then(function(response)  {
-              console.log(...response.data)
-        setPost([...response.data]);
-    });    
-}
+    ).then((response)=> {
+      console.log(response)
+      setPost([...response.data]);
+    });
+  }
 
-
-    
-    
-        
-    return (
-        <div>
-            {/* <image shape= "circle" src={.foodImg}></image>
+  return (
+    <div>
+      <>
+        <Header2 />
+      </>
+      {/* <image shape= "circle" src={foodImg}></image>
            <nav>{user.userId}</nav>  */}
-         <Header2/>
-          
-          
-    <div>
-    
-    
-    <div>
-    {
-        post.map((a, i) => {
-          return (
-            <Form >
-              <Img src={a.foodImg} />
-              <p>{a.stdRestNm}</p>
-              <Title>{a.title}</Title>
-              <Content>{a.foodCost}</Content>
-              <tr></tr>
 
-                    <button>삭제하기</button>
-            </Form>
-          )
-        })
-      }
+
+
+      <Box>
+        {
+          post.map((a, i) => {
+            return (
+             
+
+                <Form onClick={() => { navigate(`/detail/${i}`) }}>
+                  
+                  <ImgB>
+                    <Img src={a.foodImg} />
+                  </ImgB>
+                
+                  <Text>
+                    <p>{a.stdRestNm}</p><br />
+                    <Title>{a.title}</Title>
+                    <Content>{a.foodCost}</Content>
+                    <tr></tr>
+                  </Text>
+
+                </Form>
+         
+
+
+            )
+
+          })
+        } </Box>
+
+
+
+
     </div>
-            
-            
-            
-        
-           
-          </div>
-    
-          
-  
-        </div>
-    );
+  );
 }
-
-const Form = styled.div`
+const ImgB = styled.div`
+display: flex;
+flex-direction: row;
+`
+const Text = styled.div`
 display: flex;
 flex-direction: column;
+`
+
+const Box = styled.div`
+
+display: flex;
+flex-direction: column;
+
 justify-content: center;
-position: relative;
-left: 27px;
+align-items: center;
+`
+
+const Form = styled.div`
+flex-direction: row;
+display: flex;
+padding: 5px;
+
+width: 500px;
+border-radius:15px;
+border: 1px solid black; 
+
+margin: 0 auto;
+margin-bottom: 10px;
+
 `;
 
 const Title = styled.h2`
-   position: relative;
-   right: 20px;
 `;
+
 const Img = styled.img`
-   max-width: 550px;
-   position: relative;
-   right: 27px;
-   justify-content: center;
-   align-items: center;
+  border-radius:15px;
+  width: 150px;
 `;
 const Content = styled.p`
-   margin: 5px auto;
-   position: relative;
-   right: 25px;
+  
+  
 `;
 
 

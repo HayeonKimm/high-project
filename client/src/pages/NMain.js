@@ -1,88 +1,117 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate,useParams } from 'react-router-dom';
 import styled from 'styled-components'
 import axios from 'axios';
 import Header1  from '../headers/header1';
 
 function NMain() {
-  
+  const navigate = useNavigate(); 
+   
+    
 
   const [post , setPost] = React.useState([]);
 
   React.useEffect(() => {
     loadPostAxios();
+  
    }, []);   
-
+   
 
   const loadPostAxios = ()=> {
     axios.get('http://localhost:5001/list'
     ).then(function(response)  {
-              console.log(...response.data)
+       
         setPost([...response.data]);
     });    
 }
-
-
+        
     return (
         <div>
-    
+          <>
           <Header1/>
-    <div>
-    
-    
-    <div>
-      {
+          </>
+            {/* <image shape= "circle" src={foodImg}></image>
+           <nav>{user.userId}</nav>  */}
+        
+          
+ 
+         <Box>
+         {
         post.map((a, i) => {
           return (
             <Form>
+              <ImgB>
               <Img src={a.foodImg} />
-              <p>{a.stdRestNm}</p>
+              </ImgB>
+              
+              <Text>
+              <p>{a.stdRestNm}</p><br/>
               <Title>{a.title}</Title>
               <Content>{a.foodCost}</Content>
               <tr></tr>
+              </Text>
+              
 
-                    <button>삭제하기</button>
+                    {/* <button onClick={() => {
+              navigate(`/Detail/${i}/`)
+            }}>삭제하기</button> */}
             </Form>
+                    
           )
-        })
-      }
-    </div>
-            
-            
-            
-        
-           
-          </div>
-    
           
+        })
+      } </Box>
+ 
   
+  
+    
         </div>
     );
 }
-
-const Form = styled.div`
+const ImgB = styled.div`
+display: flex;
+flex-direction: row;
+`
+const Text = styled.div`
 display: flex;
 flex-direction: column;
+`
+
+const Box = styled.div`
+
+display: flex;
+flex-direction: column;
+
 justify-content: center;
-position: relative;
-left: 27px;
+align-items: center;
+`
+
+const Form = styled.div`
+flex-direction: row;
+display: flex;
+padding: 5px;
+
+width: 500px;
+border-radius:15px;
+border: 1px solid black; 
+
+margin: 0 auto;
+margin-bottom: 10px;
+
 `;
 
 const Title = styled.h2`
-   position: relative;
-   right: 20px;
 `;
+
 const Img = styled.img`
-   max-width: 550px;
-   position: relative;
-   right: 27px;
-   justify-content: center;
-   align-items: center;
+  border-radius:15px;
+  width: 150px;
 `;
 const Content = styled.p`
-   margin: 5px auto;
-   position: relative;
-   right: 25px;
+  
+  
 `;
+
+
 
 export default NMain

@@ -2,6 +2,8 @@ import React from 'react';
 import {useNavigate} from 'react-router-dom'
 import styled from 'styled-components'
 import axios from 'axios'
+import Button from '@mui/material/Button';
+import Input from '@mui/material/Input';
 // import {useDispatch} from 'react-redux'
 // import {loginUser} from "../redux/modules/User.js";
 
@@ -39,7 +41,7 @@ function LogIn() {
   
  
     const loginAxios= ()=> {
-        axios.post('http:// /api/user/login', {
+        axios.post('http://3.38.104.237/api/user/login', {
             "userId": id_ref.current.value,
             "password": pw_ref.current.value
         }).then(function(response)  {
@@ -54,23 +56,27 @@ function LogIn() {
         })
     }
 
- 
+    const ariaLabel1 = { 'aria-label': 'description' };
+
     return (
         <div>
-      
+            
     <Container>
     
-    
+    <Title>로그인</Title>
     <div> 
-            <input   placeholder="아이디를 입력해주세요." 
+            <Input   placeholder="아이디를 입력해주세요." sx={{marginTop: '30px;'}}
+            inputProps={ariaLabel1}
             onChange={(e) => setUserName(e.target.value)} ref={id_ref}/>    <br/>
-            <input type="Password"   placeholder="비밀번호를 입력해주세요." 
+            <Input type="Password"  sx={{margin: '20px;'}} placeholder="비밀번호를 입력해주세요." 
             onChange={(e) => setPwd(e.target.value)} ref={pw_ref}/>   <br/>      
       
-          
-            <Btn1 onClick={loginAxios}> 로그인  </Btn1>
+            <Box>
+            <Button variant="text"  onClick={loginAxios} sx={{ color: 'black', fontFamily: 'Yeongdo-Rg', }}>로그인</Button>
+            <Button variant="text"  onClick={()=>{navigate('/SignUp')}} sx={{ color: 'black', fontFamily: 'Yeongdo-Rg' }}>회원가입</Button>
+            </Box>
+           
             
-            <Btn2 onClick={()=>{navigate('/SignUp')}} > 회원가입</Btn2>
           </div>
     
           
@@ -90,21 +96,30 @@ display: flex;
 flex-direction: column;
 align-content: flex-start;
 float: center;
-margin: 40px 20px 40px 20px;
+margin: 20px 20px 40px 20px;
 position: absolute;
 top: 50%;
 left: 50%;
 transform: translate(-50%,-50%);
-
+border-radius: 15px;
+border: 2px black dotted; 
 text-align: center;`
 
-const Btn1 = styled.button`
-margin: 10px 10px 10px 10px;
+const Title = styled.h1`
+
+font-family: 'Yeongdo-Rg';
+color: transparent;
+background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTdLt1zib9jf_KGn-cbMVXEd1jnoj4d8N3Tf_e8ZAERycVvUBXsDugqAX_i-JVJ000pfns&usqp=CAU');
+background-clip: text;
+-webkit-background-clip: text;
+font-size:40px
 `
 
-const Btn2 = styled.button`
-margin: 10px 10px 10px 10px;
-` ;
+const Box = styled.div`
+margin-top: 30px; 
+
+`
+
 
 
 

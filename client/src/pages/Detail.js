@@ -1,89 +1,100 @@
 import React from 'react';
-import {Navigate, useNavigate,useParams} from 'react-router-dom'
+import { Navigate, useNavigate, useParams } from 'react-router-dom'
 import styled from 'styled-components'
 import axios from 'axios';
+import Header2 from '../headers/header2';
+import IconButton from '@mui/material/IconButton';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 
+function Detail(props) {
 
-
-function Detail() {
-    // const [rate, setRate] = React.useState(0);
+  
     const [comment, setComment] = React.useState([]);
+    const [userId, setUserId] = React.useState([]);
     const comment_ref = React.useRef(null);
-   
-   React.useEffect(() => {
-     AddCommentAxios ();
-    LoadCommmentAxios();
-   }, []);   
-    
-   const AddCommentAxios =() => {
-    axios({
-        method: "post",
-        headers: {"Content-Type": "application/json",
-        Authorization: "Bearer" + localStorage.getItem('token')},
-        data:{
-        Comment : comment_ref.current.value                              
-        }
-       }).then(function(response)  {
-        window.alert('댓글이 등록되었습니다!');
-        window.reload();
-       })
-  }
+    // const navigate = useNavigate();
+    const token = localStorage.getItem("token")
 
-    const LoadCommmentAxios =() => {
-        axios.get('http://localhost:5001/list'
-        ).then(function(response) {
-              console.log(...response.data)
+    React.useEffect(() => {
+
+        LoadCommmentAxios();
+    }, []);
+
+    const AddCommentAxios = () => {
+
+        axios({
+            method: "post",
+            url: 'http://localhost:5001/list',
+            // headers: {"Content-Type": "application/json",
+            // Authorization: "Bearer" + localStorage.getItem('token')},
+            data: {
+                Comment: comment_ref.current.value
+            }
+        }).then(function (response) {
+            window.alert('댓글이 등록되었습니다!');
+            window.location.reload();
+        })
+    }
+
+    const LoadCommmentAxios = () => {
+        axios.get('http://localhost:5001/list' 
+        ).then(function (response) {
+            console.log(...response.data)
             setComment([...response.data]);
+            setUserId([...response.data]);
         });
     }
 
+    const DeleteCommentAxios = () => {
+        axios.delete(`http://localhost:5001/list/api/details/`,
+        {
+        // headers:{'Authorization': `Bearer ${token}`}
+        }).then((response)=> {
+            console.log(response)
+            alert('삭제 완료')
+            window.location.reload();
+        }).catch((error)=> {
+            console.log(error.response.data.errorMessage)
+            console.log(error)
+        })
+    }
 
-    
-   
+
     return (
         <div>
-            {/* <Dbox>
-        {Array.from({ length: 5 }, (item, idx) => {
-           return (
-           <div
-              key={idx}
-           onClick={() => { setRate(idx + 1);
-              }}
-              style={{
-              width: "40px",
-              height: "40px",
-              margin: "5px",
-             marginTop: "20px",                   
-             backgroundColor: rate < idx + 1 ? "#ddd" : "#ffeb3b",
-              }}
-          ></div>
-          );
-        })}
-        <button>별점 매기기</button>
-        </Dbox> */}
-        <div>
-            <input type="text"  onChange={(e)=>{setComment(e.target.value)}} ref={comment_ref}/>
-             <button onClick={AddCommentAxios}>추가하기</button> 
-        </div>
-        <ListStyle>
-            {comment.map((a, i) => {
-                return (
-                <ItemStyle
-                    className="list_item"
-                    
-                    >
-                    {a.comment}
-                    <button >삭제하기</button>
-                </ItemStyle>
-                );
-                })}
-                
-     </ListStyle>
-            
-        </div>
+            <div>
+                <Header2 />
+            </div>
+
         
-     
+            <Box>
+                <ListStyle>
+                    {comment && comment.map((a, i) => {
+                    
+                        return (
+                            <ItemStyle
+                                className="list_item">
+                                {a.Comment}
+                                {a.username}
+                                
+                                <IconButton aria-label="delete" onClick={DeleteCommentAxios}>
+                                    <DeleteIcon />
+                                </IconButton>
+                            </ItemStyle>
+                        );
+                    })}
+                </ListStyle>
+            </Box>
+            <Text>
+                <input type="text" ref={comment_ref} />
+                <button onClick={AddCommentAxios}>추가하기</button>
+            </Text>
+
+
+        </div>
+
+
     )
 }
 
@@ -93,20 +104,34 @@ function Detail() {
 // justify-content: center;
 // align-items: center;
 // `
+
+const Box = styled.div`
+`
 const ListStyle = styled.div`
 display: flex;
 flex-direction: column;
+justify-content: center;
 height: 100%;
 overflow-x: hidden;
 overflow-y: auto;
+background-color: aliceblue;
+font-family: 'Yeongdo-Rg';
 `;
 
 const ItemStyle = styled.div`
 padding: 16px;
 margin: 8px;
-background-color: aliceblue;
+
 `;
 
+const Text = styled.div`
+
+
+
+    font-family: 'Yeongdo-Rg';
+
+
+`
 
 export default Detail;
 
