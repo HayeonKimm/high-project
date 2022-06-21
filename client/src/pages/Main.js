@@ -1,61 +1,123 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components'
+import Header2 from '../headers/header2';
+import axios from 'axios';
 
-
-function Main({ 가게이름 }) {
-    const navigate = useNavigate(); 
-   
-    const logOut= () => {
-      localStorage.removeItem('login-token');
-      
-      navigate('/')
-    }
-
-    
-    
-        
-    return (
-        <div>
-           {/* <image shape= "circle" src={user.userImageUrl}></image>
-           <nav>{user.userId}</nav>  */}
-         
-          <button onClick={logOut}> log out</button>
-          <Line/>
-    <div>
-    
-    
-    <div>
-      {
-        가게이름.map((a, i) => {
-          return (
-            <div style={{ background: 'gray', height: '300px', width: '300px', color: 'white' }}>
-              <p>{a.name}</p>
-              <p>{a.location}</p>
-              <button onClick={() => {
-                navigate(`/Detail/${i}/`)
-              }}>{a.image}</button>
-              <tr></tr>
-            </div>
-          )
-        })
-      }
-    </div>
-            
-            
-            
-        
-           
-          </div>
-    
-          
+function Main() {
+  const navigate = useNavigate();
   
-        </div>
-    );
-}
+  // let {postId} =useParams();
 
-const Line = styled.hr`
+  const [post, setPost] = React.useState([]);
+
+  React.useEffect(() => {
+    loadPostAxios();
+    // loadUserAxios();
+  }, []);
+
+  // const loadUserAxios = () => {
+  //   axios.get("http://54.180.120.192/api/main"
+  //   ).then(function (response) {
+
+  //   });
+  // }
+  const loadPostAxios = () => {
+    axios.get('http://localhost:5001/list'
+    ).then((response)=> {
+      console.log(response)
+      setPost([...response.data]);
+    });
+  }
+
+  return (
+    <div>
+      <>
+        <Header2 />
+      </>
+      {/* <image shape= "circle" src={foodImg}></image>
+           <nav>{user.userId}</nav>  */}
+
+
+
+      <Box>
+        {
+          post.map((a, i) => {
+            return (
+             
+
+                <Form onClick={() => { navigate(`/detail/${i}`) }}>
+                  
+                  <ImgB>
+                    <Img src={a.foodImg} />
+                  </ImgB>
+                
+                  <Text>
+                    <p>{a.stdRestNm}</p><br />
+                    <Title>{a.title}</Title>
+                    <Content>{a.foodCost}</Content>
+                    <tr></tr>
+                  </Text>
+
+                </Form>
+         
+
+
+            )
+
+          })
+        } </Box>
+
+
+
+
+    </div>
+  );
+}
+const ImgB = styled.div`
+display: flex;
+flex-direction: row;
 `
+const Text = styled.div`
+display: flex;
+flex-direction: column;
+`
+
+const Box = styled.div`
+
+display: flex;
+flex-direction: column;
+
+justify-content: center;
+align-items: center;
+`
+
+const Form = styled.div`
+flex-direction: row;
+display: flex;
+padding: 5px;
+
+width: 500px;
+border-radius:15px;
+border: 1px solid black; 
+
+margin: 0 auto;
+margin-bottom: 10px;
+
+`;
+
+const Title = styled.h2`
+`;
+
+const Img = styled.img`
+  border-radius:15px;
+  width: 150px;
+`;
+const Content = styled.p`
+  
+  
+`;
+
 
 
 export default Main

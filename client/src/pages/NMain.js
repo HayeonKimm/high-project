@@ -1,64 +1,117 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate,useParams } from 'react-router-dom';
 import styled from 'styled-components'
 import axios from 'axios';
+import Header1  from '../headers/header1';
 
-function NMain({ 가게이름 }) {
-  const navigate = useNavigate();
-
-  const [post , setPost] = React.useState([]) 
-
-//   const loadPostAxios= ()=> {
-//     axios.get('url'
-//     ).then(function(response)  {
-              
-//         setPost([...response.data.]);
-//     });
+function NMain() {
+  const navigate = useNavigate(); 
+   
     
-// }
 
-          
-         
-    
- 
+  const [post , setPost] = React.useState([]);
+
+  React.useEffect(() => {
+    loadPostAxios();
+  
+   }, []);   
+   
+
+  const loadPostAxios = ()=> {
+    axios.get('http://localhost:5001/list'
+    ).then(function(response)  {
+       
+        setPost([...response.data]);
+    });    
+}
+        
     return (
         <div>
-          <button onClick={()=>{navigate('/LogIn')}} > Log in  </button>
-          <button onClick={()=>{navigate('/SignUp')}} > Sign Up </button>
-          <Line/>
-    <div>
-    
-    
-    <div>
-      {
+          <>
+          <Header1/>
+          </>
+            {/* <image shape= "circle" src={foodImg}></image>
+           <nav>{user.userId}</nav>  */}
+        
+          
+ 
+         <Box>
+         {
         post.map((a, i) => {
           return (
-            <div style={{ background: 'gray', height: '300px', width: '300px', color: 'white' }}>
-              <img src={setPost[index].foodImg} />
-              <p>{setPost[index].stdRestNm}</p>
-              <p>{setPost[index].foodNm}</p>
-              <p>{setPost[index].foodCost}</p>
+            <Form>
+              <ImgB>
+              <Img src={a.foodImg} />
+              </ImgB>
+              
+              <Text>
+              <p>{a.stdRestNm}</p><br/>
+              <Title>{a.title}</Title>
+              <Content>{a.foodCost}</Content>
               <tr></tr>
-            </div>
+              </Text>
+              
+
+                    {/* <button onClick={() => {
+              navigate(`/Detail/${i}/`)
+            }}>삭제하기</button> */}
+            </Form>
+                    
           )
-        })
-      }
-    </div>
-            
-            
-            
-        
-           
-          </div>
-    
           
+        })
+      } </Box>
+ 
   
+  
+    
         </div>
     );
 }
-
-const Line = styled.hr`
+const ImgB = styled.div`
+display: flex;
+flex-direction: row;
 `
+const Text = styled.div`
+display: flex;
+flex-direction: column;
+`
+
+const Box = styled.div`
+
+display: flex;
+flex-direction: column;
+
+justify-content: center;
+align-items: center;
+`
+
+const Form = styled.div`
+flex-direction: row;
+display: flex;
+padding: 5px;
+
+width: 500px;
+border-radius:15px;
+border: 1px solid black; 
+
+margin: 0 auto;
+margin-bottom: 10px;
+
+`;
+
+const Title = styled.h2`
+`;
+
+const Img = styled.img`
+  border-radius:15px;
+  width: 150px;
+`;
+const Content = styled.p`
+  
+  
+`;
+
 
 
 export default NMain
