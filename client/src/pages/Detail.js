@@ -26,8 +26,13 @@ function Detail(props) {
         axios({
             method: "post",
             url: 'http://localhost:5001/list',
+<<<<<<< HEAD
             // headers: {"Content-Type": "application/json",
             // Authorization: "Bearer" + localStorage.getItem('token')},
+=======
+            headers: {"Content-Type": "application/json",
+            Authorization: "Bearer" + localStorage.getItem('token')},
+>>>>>>> 38cd6222fc12858c10f6b778230d3e4d77a55652
             data: {
                 Comment: comment_ref.current.value
             }

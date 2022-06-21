@@ -15,7 +15,11 @@ function Header1() {
             <Title onClick={() => { navigate('/') }}>🛣고속도로  로 '맛' 으 </Title>
             <Signupbutton>
             <Button onClick={() => { navigate('/LogIn') }} > Log in  </Button>
+<<<<<<< HEAD
             <Button onClick={() => { navigate('//SignUp') }} > Sign Up </Button>
+=======
+            <Button onClick={() => { navigate('/SignUp') }} > Sign Up </Button>
+>>>>>>> 38cd6222fc12858c10f6b778230d3e4d77a55652
             </Signupbutton>
             
 

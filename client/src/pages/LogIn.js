@@ -1,9 +1,14 @@
 import React from 'react';
-import {useNavigate} from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 import axios from 'axios'
 import Button from '@mui/material/Button';
 import Input from '@mui/material/Input';
+<<<<<<< HEAD
+=======
+import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
+>>>>>>> 38cd6222fc12858c10f6b778230d3e4d77a55652
 // import {useDispatch} from 'react-redux'
 // import {loginUser} from "../redux/modules/User.js";
 
@@ -19,7 +24,7 @@ function LogIn() {
     // const onSubmitHandler = ()=> {
 
     //     .preventDefault();
-        
+
     //     // console.log("username", username);
     //     // console.log("password", password);
     //     let body = {
@@ -30,28 +35,35 @@ function LogIn() {
     //     dispatch(loginUser(body))
     //     .then(response => {
     //         if(response.payload.loginSuccess){
-              
+
     //          navigate('/');
     //         }else{
     //             alert("로그인 정보가 잘못되었습니다!")
     //         }
     //     })
-      
+
     // }
+<<<<<<< HEAD
   
  
     const loginAxios= ()=> {
         axios.post('http://3.38.104.237/api/user/login', {
+=======
+
+
+    const loginAxios = () => {
+        axios.post('http://localhost:5001/list', {
+>>>>>>> 38cd6222fc12858c10f6b778230d3e4d77a55652
             "userId": id_ref.current.value,
             "password": pw_ref.current.value
-        }).then(function(response)  {
+        }).then(function (response) {
             alert("로그인 되었습니다!")
             navigate('/');
 
             localStorage.setItem('access_token', response.data.token);
 
             console.log(response)
-        }).catch(function(error){
+        }).catch(function (error) {
             alert("로그인정보가 틀렸습니다.")
         })
     }
@@ -60,6 +72,7 @@ function LogIn() {
 
     return (
         <div>
+<<<<<<< HEAD
             
     <Container>
     
@@ -81,6 +94,34 @@ function LogIn() {
     
           
         </Container>
+=======
+
+            <Container>
+
+                <Title>로그인</Title>
+                <div>
+                    <Box sx={{ display: 'flex', alignItems: 'flex-end', }}>
+
+                        <TextField id="input-with-sx" label="E-mail" variant="standard" inputRef={id_ref} />
+                    </Box>   <br />
+                    <Box sx={{ display: 'flex', alignItems: 'flex-end', }}>
+
+                        <TextField id="input-with-sx" label="password" variant="standard" inputRef={pw_ref} />
+                    </Box>
+
+                    <br />
+
+                    <Box1>
+                        <Button variant="text" onClick={loginAxios} sx={{ color: 'black', fontFamily: 'Yeongdo-Rg', }}>로그인</Button>
+                        <Button variant="text" onClick={() => { navigate('/SignUp') }} sx={{ color: 'black', fontFamily: 'Yeongdo-Rg' }}>회원가입</Button>
+                    </Box1>
+
+
+                </div>
+
+
+            </Container>
+>>>>>>> 38cd6222fc12858c10f6b778230d3e4d77a55652
         </div>
     );
 }
@@ -115,7 +156,11 @@ background-clip: text;
 font-size:40px
 `
 
+<<<<<<< HEAD
 const Box = styled.div`
+=======
+const Box1 = styled.div`
+>>>>>>> 38cd6222fc12858c10f6b778230d3e4d77a55652
 margin-top: 30px; 
 
 `

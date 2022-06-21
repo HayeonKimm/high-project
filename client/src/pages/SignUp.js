@@ -5,10 +5,17 @@ import axios from 'axios'
 import { storage } from '../shared/firebase';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
 import Button from '@mui/material/Button';
+<<<<<<< HEAD
 import Input from '@mui/material/Input';
 import IconButton from '@mui/material/IconButton';
 import PhotoCamera from '@mui/icons-material/PhotoCamera';
 
+=======
+import IconButton from '@mui/material/IconButton';
+import PhotoCamera from '@mui/icons-material/PhotoCamera';
+import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
+>>>>>>> 38cd6222fc12858c10f6b778230d3e4d77a55652
 
 function SignUp() {
     const navigate = useNavigate();
@@ -38,6 +45,7 @@ function SignUp() {
 
 
     const signupdata = () => {
+<<<<<<< HEAD
 
         axios.post("http://3.38.104.237", {
             "userImageUrl": profile_ref.current?.url,
@@ -46,14 +54,34 @@ function SignUp() {
             
         }).then(function (response) {
 
+=======
+        
+        axios.post("http://localhost:5001/list", {
+           
+            "userImageUrl": profile_ref.current.url,
+            "userId": id_ref.current.value,
+            "password": pw_ref.current.value,
+            
+        }).then((response)=>{
+>>>>>>> 38cd6222fc12858c10f6b778230d3e4d77a55652
 
+            console.log(profile_ref.current?.url)
             alert("회원가입을 축하드립니다!!")
             navigate('/');
 
+<<<<<<< HEAD
         });
 
     }
     const ariaLabel1 = { 'aria-label': 'description' };
+=======
+        }).catch((error)=>{
+            console.log(error)
+        })
+
+    }
+   
+>>>>>>> 38cd6222fc12858c10f6b778230d3e4d77a55652
     const Input1 = styled('input')({
         display: 'none',
       });
@@ -75,6 +103,7 @@ function SignUp() {
                                 <PhotoCamera />
                             </IconButton>
                         </label>
+<<<<<<< HEAD
                         <Input placeholder="아이디를 입력해주세요."
                             inputProps={ariaLabel1}
                             onChange={(e) => setUserName(e.target.value)}
@@ -97,6 +126,28 @@ function SignUp() {
                             ref={pw_check_ref} /><br />
 
 
+=======
+                     
+
+                         {/* <input placeholder="아이디를 입력해주세요." type="text"onChange={(e) => setUserName(e.target.value)}
+                            ref={id_ref} />   */}
+                             <Box sx={{ display: 'flex', alignItems: 'flex-end', }}>
+
+        
+                                <TextField  id="input-with-sx" label="E-mail" variant="standard" onChange={(e) => setUserName(e.target.value)}  inputRef={id_ref} />
+                            </Box>
+                            <Box sx={{ display: 'flex', alignItems: 'flex-end', }}>
+                                
+                                <TextField  id="input-with-sx" label="password" variant="standard" onChange={(e) => setPwd(e.target.value)} inputRef={pw_ref}  />
+                                </Box>
+                                <Box sx={{ display: 'flex', alignItems: 'flex-end', }}>
+                                
+                                <TextField  id="input-with-sx" label="Password" variant="standard"  onChange={(e) => setPwdCheck(e.target.value)} inputRef={pw_check_ref} />
+                                </Box>
+                               
+                      
+
+>>>>>>> 38cd6222fc12858c10f6b778230d3e4d77a55652
                         <Signupbutton>
                             <Button variant="text" onClick={signupdata} sx={{ color: 'black', fontFamily: 'Yeongdo-Rg' }}>회원가입</Button>
                             <Button variant="text" onClick={() => { navigate('/') }} sx={{ color: 'black', fontFamily: 'Yeongdo-Rg' }}>취소</Button>

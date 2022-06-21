@@ -82,11 +82,9 @@
 <br/>
 <br/>
 
-## 👍Back-end TEAM👍 
+## 👍Front-end TEAM👍 
 
--   
--   
--   
+- 하율찬
 
 
 <br/>

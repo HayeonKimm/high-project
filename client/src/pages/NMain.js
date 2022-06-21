@@ -18,7 +18,11 @@ function NMain() {
    
 
   const loadPostAxios = ()=> {
+<<<<<<< HEAD
     axios.get('http://localhost:5001/list'
+=======
+    axios.get('http://13.209.35.101:3000/'
+>>>>>>> 38cd6222fc12858c10f6b778230d3e4d77a55652
     ).then(function(response)  {
        
         setPost([...response.data]);
